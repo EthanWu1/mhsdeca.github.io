@@ -1,0 +1,82 @@
+
+import React from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Lightbulb, Users, Trophy, Target, Briefcase, Globe } from "lucide-react";
+
+export default function FeaturesSection() {
+  const features = [
+    {
+      icon: Lightbulb,
+      title: "Competitive Events",
+      description: "Participate in regional and state competitions across various business disciplines including marketing, finance, and entrepreneurship."
+    },
+    {
+      icon: Users,
+      title: "Leadership Development",
+      description: "Develop essential leadership skills through chapter officer positions, project management, and peer mentoring opportunities."
+    },
+    {
+      icon: Briefcase,
+      title: "Professional Network",
+      description: "Connect with business professionals, alumni, and fellow DECA members to build lasting professional relationships."
+    },
+    {
+      icon: Globe,
+      title: "Real-World Experience",
+      description: "Gain hands-on experience through internships, business partnerships, and community service projects."
+    },
+    {
+      icon: Trophy,
+      title: "Recognition & Awards",
+      description: "Earn recognition for academic and competitive achievements at local, state, and international levels."
+    },
+    {
+      icon: Target,
+      title: "College & Career Prep",
+      description: "Receive guidance on college applications, scholarships, and career planning from advisors and alumni."
+    }
+  ];
+
+  return (
+    <section className="py-20 px-6 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Why Join <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">DECA?</span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            DECA prepares emerging leaders and entrepreneurs for careers in marketing, finance, 
+            hospitality, and management in high schools worldwide.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Card className="bg-white border hover:shadow-xl transition-all duration-300 h-full">
+                <CardContent className="p-8">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-6">
+                    <feature.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

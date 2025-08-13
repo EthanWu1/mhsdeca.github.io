@@ -1,0 +1,46 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Member, Event } from "@/entities/all";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowRight, Award, Users, Calendar, Trophy, Target, Lightbulb } from "lucide-react";
+import { motion } from "framer-motion";
+
+import HeroSection from "../components/home/HeroSection";
+import FeaturesSection from "../components/home/FeaturesSection";
+import UpcomingEvents from "../components/home/UpcomingEvents";
+
+export default function HomePage() {
+  const [memberCount, setMemberCount] = useState(0);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const [members, events] = await Promise.all([
+        Member.list(),
+        Event.list('date', 5)
+      ]);
+      
+      setMemberCount(members.length);
+      setUpcomingEvents(events.filter(event => new Date(event.date) >= new Date()));
+    } catch (error) {
+      console.error("Error loading data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen">
+      <HeroSection />
+      <FeaturesSection />
+      <UpcomingEvents events={upcomingEvents} loading={loading} />
+    </div>
+  );
+}
